@@ -1,0 +1,16 @@
+{
+  "name": "node-linkify",
+  "version": "1.0.0",
+  "description": "Replace specific text in message via regex. E.g. JIRA titles with an href to that JIRA page",
+  "main": "index.js",
+  "author": "Roger Urscheler, Unify Inc.",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "circuit": "file:circuit-1.1.7700.tgz",
+    "ejs": "^2.5.2",
+    "randomstring": "^1.1.5",
+    "request": "^2.75.0",
+    "simple-oauth2": "^1.0.0"
+  }
+}

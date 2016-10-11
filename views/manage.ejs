@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Linkify for Circuit</h2>
+        <p>Adding this extension to your Circuit account on <i><%= domain %></i> will update your post by converting predefined text strings with links.</p>
+        <p>For example when post a message containing a JIRA issue, it gets replaced by a link to that JIRA issue.</p>
+        <p>Your post:<br>
+        <img src="before.jpg">
+        </p>
+        <p>Immediately updated by linkifier on your behalf:<br>
+        <img src="after.jpg">
+        </p>
+        <br>
+        <% if(authenticated){ %>
+        <h3>Manage</h3>
+        <p>Logged in as <%= displayName %>. <a href="/logout">Logout</a></p>
+        <form method="post" action="/activate">
+            <fieldset>
+                <ul>
+                    <% for(var i=0; i < data.length; i++) { %>
+                    <li>
+                        <label><input type="checkbox" name="<%= data[i].id %>" <%= data[i].active ? 'checked' : '' %>> <%= data[i].title %></label>
+                    </li>
+                    <% } %>
+                </ul>
+            </fieldset>
+            <br>
+            <input type="submit" class="btn btn-primary" id="submit" value="Save"/>
+        </form>
+        <% } else{ %>  
+        <a class="btn btn-primary" href="/login">Login with Circuit</a>
+        <% } %>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">roger.urscheler@unify.com | source on <a href="https://github.com/circuit/node-linkify/">github</a></p>
+      </div>
+    </footer>
+</body>
+</html>
