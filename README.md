@@ -34,12 +34,11 @@ Edit config.json
 * Configure the linkify regex
 
 ```bash
-{
     "circuit": {
         "domain": "circuitsandbox.net",
-        "client_id": "bee562d3d6a947efa04438a996f34c80",
-        "client_secret": "37c8cb081cd64764ba26cdbaf9bee00a",
-        "scope": "READ_USER_PROFILE,READ_CONVERSATIONS"
+        "client_id": "<your client_id>",
+        "client_secret": "<your client_secret>",
+        "scope": "READ_USER_PROFILE,READ_CONVERSATIONS,WRTIE_CONVERSATIONS"
     },
     "app": {
         "domain": "http://localhost",
@@ -50,13 +49,13 @@ Edit config.json
         "title": "Jira (ANS, AAC and CRI links)",
         "id": "jira",
         "search": "(ANS-[0-9]{1,5}|AAC-[0-9]{1,5}|CRI-[0-9]{1,5})",
-        "replace": "https://jira.dev.global-intra.net:8443/browse/$1"
+        "replace": "https://<your jira server>/browse/$1"
     },
     {
         "title": "Gerrit (patch number)",
         "id": "gerrit",
         "search": "([4-6][0-9]{4})",
-        "replace": "https://gitsrv1.dev.global-intra.net/#/c/$1"
+        "replace": "https://<your gerrit server>/#/c/$1"
     }]
 }
 ``` 
