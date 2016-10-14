@@ -77,4 +77,4 @@ curl "https://circuitsandbox.net/circuit.tgz" -o "circuit.tgz"
 ``` 
 
 ## Demo video
-[![ScreenShot](images/node-linkify.jpg)](https://circuit.github.io/videos/node-linkify.webm)
+[![ScreenShot](https://circuit.github.io/images/node-linkify.jpg)](https://circuit.github.io/videos/node-linkify.webm)
