@@ -8,11 +8,12 @@ This node.js web server application parses the text messages sent by the user an
 
 Your post:
 
-![Before](public/before.jpg =600x)
+<img src="public/before.jpg" width="600px">
 
 Updated by Circuit Linkify on your behalf:
 
-![After](public/after.jpg =600x)
+<img src="public/after.jpg" width="600px">
+
 
 ## Requirements
 * [node 4.x](http://nodejs.org/download/)
