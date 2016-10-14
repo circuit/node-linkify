@@ -9,6 +9,9 @@
     "body-parser": "^1.15.2",
     "circuit": "file:circuit-1.1.7700.tgz",
     "ejs": "^2.5.2",
+    "file-exists": "^2.0.0",
+    "jsonfile": "^2.4.0",
+    "node-persist": "^2.0.3",
     "randomstring": "^1.1.5",
     "request": "^2.75.0",
     "simple-oauth2": "^1.0.0"

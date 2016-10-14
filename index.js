@@ -26,28 +26,36 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Session = require('express-session');
 const request = require('request');
-const Circuit = require('circuit');
-const fs = require('fs');
 const randomstring = require('randomstring');
 const OAuth2 = require('simple-oauth2');
+
+const linkifier = require('./linkifier');
+const store = require('./store');
 
 // Load configuration
 const config = require('./config.json');
 
-// Load user settings
-let userSettings = require('./userSettings.json');
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
-// Setup OAuth2
-const redirectUri = `${config.app.domain}:${config.app.port}/oauthCallback`
+// Init storage
+store.init();
+
+// Initialize linkifier
+linkifier.init(config.circuit.domain);
+
+// simple-oauth2 configuration
 const oauth2 = OAuth2.create({
   client: {
-    id: config.oauth2.client_id,
-    secret: config.oauth2.client_secret
+    id: config.circuit.client_id,
+    secret: config.circuit.client_secret
   },
   auth: {
     tokenHost: `https://${config.circuit.domain}`
   }
 });
+
+// OAuth2 redirect uri
+const redirectUri = `${config.app.domain}:${config.app.port}/oauthCallback`
 
 // Create app
 var app = express();
@@ -72,12 +80,13 @@ function auth(req, res, next) {
   req.session.isAuthenticated ? next() : res.redirect('/');
 }
 
-// App root url
+// Routes
 app.get('/', (req, res) => {
     if (req.session.isAuthenticated) {
-        // Read userSettings and show currently active linkifiers
+        // Read settings and show currently active linkifiers
         config.linkify.forEach(item => {
-            item.active = userSettings[req.session.userId] && !!userSettings[req.session.userId][item.id];
+            let settings = store.getSettings(req.session.userId);
+            item.active = settings && !!settings[item.id];
         });
     } 
     res.render('manage', {
@@ -95,7 +104,7 @@ app.get('/login', (req, res) => {
     // Redirect to OAuth2 authorize url
     let url = oauth2.authorizationCode.authorizeURL({
         redirect_uri: redirectUri,
-        scope: config.oauth2.scope,
+        scope: config.circuit.scope,
         state: req.session.oauthState
     });
     res.redirect(url);
@@ -106,7 +115,6 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-// OAuth2 authorize callback
 app.get('/oauthCallback', (req, res) => {
     // Verify code is present and state matches to prevent CSRF attacks
     if (req.query.code && req.session.oauthState === req.query.state) {
@@ -121,14 +129,13 @@ app.get('/oauthCallback', (req, res) => {
                 Promise.reject(result.error_description);
                 return;
             }
-            result = oauth2.accessToken.create(result);
-            req.session.token = result.token;
-            req.session.isAuthenticated = true;
+            return oauth2.accessToken.create(result).token;
         })
-        .then(() => {
-            // Get the userId & email and store in session
+        .then(token => {
+            req.session.isAuthenticated = true;
+            // Get the userId & displayName and store in session
             request.get(`https://${config.circuit.domain}/rest/v2/users/profile`, {
-                'auth': { 'bearer': req.session.token.access_token }
+                'auth': { 'bearer': token.access_token }
             }, (err, httpResponse, body) => {
                 if (err) {
                     Promise.reject(err);
@@ -136,31 +143,31 @@ app.get('/oauthCallback', (req, res) => {
                 let user = JSON.parse(body);
                 req.session.userId = user.userId;
                 req.session.displayName = user.displayName;
+                store.saveToken(user.userId, token);
                 res.redirect('/');
             });
         })
         .catch(err => {
             console.log(err);
-            res.redirect('/');
+            res.render('error', {error: err});
         });
     } else {
         // Access denied
-        res.redirect('/');
+        res.render('error', {error: 'Access Denied'});
     }
 });
 
-// POST request from browser with form of new settings
 app.post('/activate', urlencodedParser, auth, (req, res) => {
     // Save the new settings
-    userSettings[req.session.userId] = req.body;
-    fs.writeFile('userSettings.json', JSON.stringify(userSettings), 'utf8', () => {
-        console.log('saved');
-    });
-    res.redirect('/success');
+    store.saveSettings(req.session.userId, req.body)
+    .then(settings => linkifier.update(req.session.userId))
+    .then(() => res.redirect('/success'))
+    .catch(console.error);
 });
 
 app.get('/success', auth, (req, res) => {
-    res.render('success', { domain: config.circuit.domain});
+    // Show success message
+    res.render('success', {domain: config.circuit.domain});
 });
 
 // Start app
