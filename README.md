@@ -45,17 +45,20 @@ Edit config.json
         "port": 7100,
         "sdkLogLevel": "debug"
     },
-    "linkify": [{
-        "title": "Jira (ANS, AAC and CRI links)",
-        "id": "jira",
-        "search": "(ANS-[0-9]{1,5}|AAC-[0-9]{1,5}|CRI-[0-9]{1,5})",
-        "replace": "https://<your jira server>/browse/$1"
-    },{
-        "title": "Gerrit (patch number)",
-        "id": "gerrit",
-        "search": "([4-6][0-9]{4})",
-        "replace": "https://<your gerrit server>/#/c/$1"
-    }]
+    "linkify": [
+        {
+            "title": "Jira (ANS, AAC and CRI links)",
+            "id": "jira",
+            "search": "(ANS-[0-9]{1,5}|AAC-[0-9]{1,5}|CRI-[0-9]{1,5})",
+            "replace": "https://<your jira server>/browse/$1"
+        },
+        {
+            "title": "Gerrit (patch number)",
+            "id": "gerrit",
+            "search": "([4-6][0-9]{4})",
+            "replace": "https://<your gerrit server>/#/c/$1"
+        }
+    ]
 }
 ``` 
  
