@@ -10,7 +10,8 @@
         "port": 7100,
         "sdkLogLevel": "debug"
     },
-    "linkify": [{
+    "linkify": [
+    {
         "title": "Jira (ANS, AAC and CRI links)",
         "id": "jira",
         "search": "(ANS-[0-9]{1,5}|AAC-[0-9]{1,5}|CRI-[0-9]{1,5})",
