@@ -2,9 +2,9 @@
 
 This node.js web server application parses the text messages sent by the user and converts predefined text with links. The predefined text and its replacement link are configurable for the app.
 
-* node.js web server application using EJS server-side templating for users to active Linkify
-* Circuit REST API OAuth2 to authentication and authorize the user (Authorization Grant Flow)
-* Circuit node.js SDK to logon on behalf of the user, subscribe to text messages and update a text messages
+* node.js web server application for users to activate Circuit Linkify
+* Circuit OAuth2 REST API to authenticate and authorize the user (Authorization Grant Flow)
+* Circuit node.js SDK to logon on behalf of the user, subscribe to text messages and update text messages
 
 Your post:
 
@@ -16,13 +16,13 @@ Updated by Circuit Linkify on your behalf:
 
 
 ## Requirements
-* [node 4.x](http://nodejs.org/download/)
-* [circuit module](https://circuitsandbox.net/sdk/)
+* [node 4.5+](http://nodejs.org/download/)
+* [circuit node.js module](https://circuitsandbox.net/sdk/)
 
 ## Getting Started
 
 ```bash
-    git clone https://github.com/yourcircuit/node-linkify.git
+    git clone https://github.com/circuit/node-linkify.git
     cd node-linkify
     cp config.json.template config.json
 ```
