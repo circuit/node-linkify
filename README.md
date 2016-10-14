@@ -7,10 +7,12 @@ This node.js web server application parses the text messages sent by the user an
 * Circuit node.js SDK to logon on behalf of the user, subscribe to text messages and update a text messages
 
 Your post:
-![Before](public/before.jpg)
+
+![Before](public/before.jpg =600px)
 
 Updated by Circuit Linkify on your behalf:
-![After](public/after.jpg)
+
+![After](public/after.jpg =600px)
 
 ## Requirements
 * [node 4.x](http://nodejs.org/download/)
