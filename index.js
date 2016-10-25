@@ -22,6 +22,8 @@
 
 'use strict';
 const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
 const Session = require('express-session');
@@ -171,6 +173,10 @@ app.get('/success', auth, (req, res) => {
 });
 
 // Start app
-var server = http.createServer(app);
+//var server = http.createServer(app);
+var server = https.createServer({
+  key: fs.readFileSync('cert/server.key'),
+  cert: fs.readFileSync('cert/server-cert.pem')
+}, app);
 server.listen(config.app.port);
 server.on('listening', () => console.log(`listening on ${config.app.port}`));
