@@ -36,9 +36,24 @@ function init() {
 }
 
 function update(userId) {
-    // User changed linkify settings
-    unsubscribe(userId);
-    subscribe(userId);
+    // User changed linkify settings. Log user out and back in for simplicity.
+    return logout(userId)
+    .then(() => { return logon(userId) })
+    .then(() => {
+        unsubscribe(userId);
+        subscribe(userId);
+    });
+}
+
+function logout(userId) {
+    return new Promise(resolve => {
+        let client = subscriptions[userId] && subscriptions[userId].client;
+        if (client) {
+            client.logout().then(resolve);
+        } else {
+            resolve();
+        }
+    });
 }
 
 function logon(userId) {

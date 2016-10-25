@@ -3,7 +3,7 @@
         "domain": "circuitsandbox.net",
         "client_id": "<your client_id>",
         "client_secret": "<your client_secret>",
-        "scope": "READ_USER_PROFILE,READ_CONVERSATIONS,WRTIE_CONVERSATIONS"
+        "scope": "READ_USER_PROFILE,READ_CONVERSATIONS,WRITE_CONVERSATIONS"
     },
     "app": {
         "domain": "http://localhost",
