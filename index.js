@@ -57,7 +57,8 @@ const oauth2 = OAuth2.create({
 });
 
 // OAuth2 redirect uri
-const redirectUri = `${config.app.domain}:${config.app.port}/oauthCallback`
+let portInUrl = config.app.includePortInRedirectURL ? `:${config.app.port}` : '';
+const redirectUri = `${config.app.domain}${portInUrl}/oauthCallback`
 
 // Create app
 var app = express();

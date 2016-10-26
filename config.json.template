@@ -8,7 +8,7 @@
     "app": {
         "domain": "http://localhost",
         "port": 7100,
-        "sdkLogLevel": "debug"
+        "includePortInRedirectURL": true
     },
     "linkify": [
         {
