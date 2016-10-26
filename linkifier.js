@@ -35,16 +35,29 @@ function init() {
     store.getUsers().forEach(userId => logon(userId).then(subscribe).catch(console.error));
 }
 
+// Check if user is authenticated
+function isAuthenticated(userId) {
+    return new Promise((resolve, reject) => {
+        let client = subscriptions[userId] && subscriptions[userId].client;
+        if (!client) {
+            reject(userId);
+            return;
+        }
+        return client.isAuthenticated().then(resolve);
+    });
+}
+
+// User initially set, or changed linkify settings. Unsubscribe and subscribe again
 function update(userId) {
-    // User changed linkify settings. Log user out and back in for simplicity.
-    return logout(userId)
-    .then(() => { return logon(userId) })
+    isAuthenticated(userId)
+    .catch(() => { return logon(userId); })
     .then(() => {
         unsubscribe(userId);
         subscribe(userId);
     });
 }
 
+// Logout user
 function logout(userId) {
     return new Promise(resolve => {
         let client = subscriptions[userId] && subscriptions[userId].client;
@@ -56,6 +69,7 @@ function logout(userId) {
     });
 }
 
+// Logon using access token
 function logon(userId) {
     return new Promise((resolve, reject) => {
         let token = store.getToken(userId);
@@ -63,7 +77,7 @@ function logon(userId) {
             reject('No token for user ' + userId);
             return;
         }
-        let client = new Circuit.Client({domain: config.circuit.domain});
+        let client = new Circuit.Client({domain: config.circuit.domain, client_id: config.circuit.client_id});
         client.logon({accessToken: token.access_token})
         .then(user => {
             subscriptions[user.userId] = {

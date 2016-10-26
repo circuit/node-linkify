@@ -173,10 +173,13 @@ app.get('/success', auth, (req, res) => {
 });
 
 // Start app
-//var server = http.createServer(app);
+var server = http.createServer(app);
+
+/* For https
 var server = https.createServer({
   key: fs.readFileSync('cert/server.key'),
   cert: fs.readFileSync('cert/server-cert.pem')
-}, app);
+}, app); */
+
 server.listen(config.app.port);
 server.on('listening', () => console.log(`listening on ${config.app.port}`));

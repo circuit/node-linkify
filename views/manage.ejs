@@ -17,7 +17,7 @@
         </p>
         <br>
         <% if(authenticated){ %>
-        <h3>Manage</h3>
+        <h3>Configure</h3>
         <p>Logged in as <%= displayName %>. <a href="/logout">Logout</a></p>
         <form method="post" action="/activate">
             <fieldset>
@@ -33,7 +33,7 @@
             <input type="submit" class="btn btn-primary" id="submit" value="Save"/>
         </form>
         <% } else{ %>  
-        <a class="btn btn-primary" href="/login">Add to Circuit</a>
+        <a class="btn btn-primary" href="/login">Configure</a>
         <% } %>
     </div>
     <footer class="footer">
