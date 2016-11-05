@@ -23,16 +23,26 @@
 'use strict';
 const Circuit = require('circuit');
 const store = require('./store');
+const bunyan = require('bunyan');
+const log = require('./logger').log;
+
 
 // Load configuration
 const config = require('./config.json');
+
+// Setup bunyan logger for SDK
+Circuit.setLogger(bunyan.createLogger({
+    name: 'sdk',
+    stream: process.stdout,
+    level: config.app.sdkLogLevel
+}));
 
 // Subscriptions hastable wiht userId as key. Values are the client object and the listener
 let subscriptions = {};
 
 function init() {
     // On startup subscribe for all users
-    store.getUsers().forEach(userId => logon(userId).then(subscribe).catch(console.error));
+    store.getUsers().forEach(userId => logon(userId).then(subscribe).catch(log.error));
 }
 
 // Check if user is authenticated
@@ -83,7 +93,7 @@ function logon(userId) {
             subscriptions[user.userId] = {
                 client: client
             }
-            console.log(`Logged on user ${user.emailAddress}`);
+            log.info(`Logged on user ${user.emailAddress}`);
             resolve(userId);
         });
     });

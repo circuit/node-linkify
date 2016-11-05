@@ -33,11 +33,12 @@ const OAuth2 = require('simple-oauth2');
 
 const linkifier = require('./linkifier');
 const store = require('./store');
+const log = require('./logger').log;
 
 // Load configuration
 const config = require('./config.json');
 
-//process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 // Init storage
 store.init();
@@ -151,7 +152,7 @@ app.get('/oauthCallback', (req, res) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            log.error(err);
             res.render('error', {error: err});
         });
     } else {
@@ -165,7 +166,7 @@ app.post('/activate', urlencodedParser, auth, (req, res) => {
     store.saveSettings(req.session.userId, req.body)
     .then(settings => linkifier.update(req.session.userId))
     .then(() => res.redirect('/success'))
-    .catch(console.error);
+    .catch(log.error);
 });
 
 app.get('/success', auth, (req, res) => {
@@ -183,4 +184,4 @@ var server = https.createServer({
 }, app); */
 
 server.listen(config.app.port);
-server.on('listening', () => console.log(`listening on ${config.app.port}`));
+server.on('listening', () => log.info(`listening on ${config.app.port}`));
