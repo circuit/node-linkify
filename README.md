@@ -68,7 +68,7 @@ Run the sample application with
     npm install
     wget https://circuitsandbox.net/circuit.tgz
     npm install circuit.tgz
-    node app.js
+    node index.js
 ``` 
 
  If you do not have wget installed you can use curl to download circuit.tgz
