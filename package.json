@@ -2,7 +2,7 @@
   "name": "node-linkify",
   "version": "1.0.0",
   "description": "Replace specific text in message via regex. E.g. JIRA titles with an href to that JIRA page",
-  "main": "index.js",
+  "main": "app.js",
   "author": "Roger Urscheler, Unify Inc.",
   "license": "MIT",
   "dependencies": {
