@@ -30,10 +30,10 @@ build/Release
 node_modules
 
 # Configuration file
-config.json
+#config.json
 
 # Circuit Node SDK
-circuit.tgz
+#circuit.tgz
 circuit-*.tgz
 
 # OS X 
