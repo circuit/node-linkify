@@ -31,9 +31,11 @@ node_modules
 
 # Configuration file
 config.json
+config.json.local
+config.json.eb
 
 # Circuit Node SDK
-#circuit.tgz
+circuit.tgz
 circuit-*.tgz
 
 # OS X 
