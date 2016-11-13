@@ -33,7 +33,7 @@ node_modules
 config.json
 
 # Circuit Node SDK
-circuit.tgz
+#circuit.tgz
 circuit-*.tgz
 
 # OS X 
@@ -41,3 +41,8 @@ circuit-*.tgz
 
 # VS Code
 .vscode
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
