@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Replace specific text in message via regex. E.g. JIRA titles with an href to that JIRA page",
   "scripts": {
-    "start": "node index.js | bunyan"
+    "start": "node index.js"
   },
   "main": "index.js",
   "author": "Roger Urscheler, Unify Inc.",
