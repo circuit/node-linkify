@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2016 Unify Inc.
+    Copyright (c) 2017 Unify Inc.
 
     Permission is hereby granted, free of charge, to any person obtaining
     a copy of this software and associated documentation files (the "Software"),
@@ -183,5 +183,6 @@ var server = https.createServer({
   cert: fs.readFileSync('cert/server-cert.pem')
 }, app); */
 
-server.listen(config.app.port);
-server.on('listening', () => log.info(`listening on ${config.app.port}`));
+let port = process.env.PORT || config.app.port || 3000;
+server.listen(port);
+server.on('listening', () => log.info(`listening on ${port}`));
