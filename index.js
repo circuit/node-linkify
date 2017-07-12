@@ -188,4 +188,5 @@ var server = https.createServer({
 }, app); */
 
 server.listen(port);
-server.on('listening', () => log.info(`listening on ${port}`));
+server.on('listening', () =>
+log.info(`listening on ${port}`));
