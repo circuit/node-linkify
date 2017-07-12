@@ -40,6 +40,8 @@ const config = require('./config.json');
 
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
+let port = process.env.PORT || config.app.port || 3000;
+
 // Init storage
 store.init();
 
@@ -58,7 +60,7 @@ const oauth2 = OAuth2.create({
 });
 
 // OAuth2 redirect uri
-let portInUrl = config.app.includePortInRedirectURL ? `:${config.app.port}` : '';
+let portInUrl = config.app.includePortInRedirectURL ? `:${port}` : '';
 const redirectUri = `${config.app.domain}${portInUrl}/oauthCallback`
 
 // Create app
@@ -84,27 +86,11 @@ function auth(req, res, next) {
   req.session.isAuthenticated ? next() : res.redirect('/');
 }
 
-// Routes
-app.get('/', (req, res) => {
-    if (req.session.isAuthenticated) {
-        // Read settings and show currently active linkifiers
-        config.linkify.forEach(item => {
-            let settings = store.getSettings(req.session.userId);
-            item.active = settings && !!settings[item.id];
-        });
-    } 
-    res.render('manage', {
-        domain: config.circuit.domain,
-        data: config.linkify,
-        authenticated: req.session.isAuthenticated,
-        displayName: req.session.displayName
-    });
-});
 
 app.get('/login', (req, res) => {
     // Create state parameter to prevent CSRF attacks. Save in session.
     req.session.oauthState = randomstring.generate(12);
-    
+
     // Redirect to OAuth2 authorize url
     let url = oauth2.authorizationCode.authorizeURL({
         redirect_uri: redirectUri,
@@ -113,6 +99,24 @@ app.get('/login', (req, res) => {
     });
     res.redirect(url);
 });
+
+// Routes
+app.get('/', (req, res) => {
+    if (req.session.isAuthenticated) {
+        // Read settings and show currently active linkifiers
+        config.linkify.forEach(item => {
+            let settings = store.getSettings(req.session.userId);
+            item.active = settings && !!settings[item.id];
+        });
+    }
+    res.render('manage', {
+        domain: config.circuit.domain,
+        data: config.linkify,
+        authenticated: req.session.isAuthenticated,
+        displayName: req.session.displayName
+    });
+});
+
 
 app.get('/logout', (req, res) => {
     req.session.isAuthenticated = false;
@@ -183,6 +187,5 @@ var server = https.createServer({
   cert: fs.readFileSync('cert/server-cert.pem')
 }, app); */
 
-let port = process.env.PORT || config.app.port || 3000;
 server.listen(port);
 server.on('listening', () => log.info(`listening on ${port}`));

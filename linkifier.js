@@ -21,7 +21,7 @@
 */
 
 'use strict';
-const Circuit = require('circuit');
+const Circuit = require('circuit-node-sdk');
 const store = require('./store');
 const bunyan = require('bunyan');
 const log = require('./logger').log;
@@ -111,7 +111,7 @@ function unsubscribe(userId) {
     if (s) {
         s.client.removeEventListener('itemAdded', s.onItemAddedListener);
         delete subscriptions[userId].onItemAddedListener;
-    } 
+    }
 }
 
 function createUpdateItem(item, content) {
