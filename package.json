@@ -7,11 +7,11 @@
   },
   "main": "index.js",
   "author": "Roger Urscheler, Unify Inc.",
-  "license": "MIT",
+  "license": "Apache 2.0",
   "dependencies": {
     "body-parser": "^1.15.2",
     "bunyan": "^1.8.4",
-    "circuit": "file:circuit.tgz",
+    "circuit-node-sdk": "^1.2.1200",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
