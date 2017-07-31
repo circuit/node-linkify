@@ -21,7 +21,7 @@
 */
 
 'use strict';
-const Circuit = require('circuit-node-sdk');
+const Circuit = require('circuit-sdk');
 const store = require('./store');
 const bunyan = require('bunyan');
 const log = require('./logger').log;

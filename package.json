@@ -1,6 +1,6 @@
 {
   "name": "node-linkify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Replace specific text in message via regex. E.g. JIRA titles with an href to that JIRA page",
   "scripts": {
     "start": "node index.js | bunyan"
@@ -11,7 +11,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "bunyan": "^1.8.4",
-    "circuit-node-sdk": "^1.2.1200",
+    "circuit-sdk": "^1.2.1200",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
