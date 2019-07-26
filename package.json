@@ -11,7 +11,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "bunyan": "^1.8.4",
-    "circuit-sdk": "^1.2.1200",
+    "circuit-sdk": "^1.2.6402",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
